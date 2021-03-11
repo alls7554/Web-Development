@@ -1,5 +1,4 @@
 .title {
-
     text-align: center;
     z-index: 1;
 }
@@ -16,4 +15,119 @@
 
 .rule{
     margin-top: 120px;
+}
+
+.jumbotron{
+    height: 100%;
+}
+
+
+.info_header  .col-md-4 {
+    height: 80px;
+    border: 1px solid black;
+    background-color: #26619c;
+}
+
+.info_header  .col-md-4 > span {
+    line-height: 80px;
+    color: black;
+}
+
+.table {
+    margin-top: 60px;
+    text-align: center;
+    font-weight: 700;
+    height: 250px;
+    background-color: white;
+}
+
+.table tr td {
+    font-size: 18px;
+    line-height: 50px !important;
+    vertical-align: middle !important;
+}
+
+#winner {
+    background-color: chartreuse;
+}
+
+.list-group > .me {
+    background-color: aquamarine !important;
+    color: black;
+}
+
+.list-group > .others {
+    background-color: darkgoldenrod !important;
+    color: black;
+}
+
+.form-control{
+    padding: 0px !important;
+    box-shadow: inset 0;
+}
+
+.num:hover{
+    background-color:#26619c;
+}
+
+.publisher {
+    /* position: relative; */
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 12px 20px;
+    background-color: #f9fafb
+}
+
+.publisher>*:first-child {
+    margin-left: 0
+}
+
+.publisher>* {
+    margin: 0 8px
+}
+
+.publisher-input {
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    border: none;
+    outline: none !important;
+    background-color: transparent;
+    margin: 0px;
+    padding: 0px !important;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: Roboto, sans-serif;
+    font-weight: 300
+}
+
+.publisher-btn {
+    background-color: transparent;
+    border: none;
+    color: #8b95a5;
+    font-size: 16px;
+    cursor: pointer;
+    overflow: -moz-hidden-unscrollable;
+    -webkit-transition: .2s linear;
+    transition: .2s linear
+}
+
+.publisher-btn {
+    background-color: transparent;
+    border: none;
+    color: #cac7c7;
+    font-size: 16px;
+    cursor: pointer;
+    overflow: -moz-hidden-unscrollable;
+    -webkit-transition: .2s linear;
+    transition: .2s linear
+}
+
+.text-info {
+    color: #48b0f7 !important
 }

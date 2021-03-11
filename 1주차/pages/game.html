@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/content.css">
+    <script src="https://kit.fontawesome.com/94f5e1f0d5.js" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
@@ -12,78 +17,130 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
 
+    <script src="../js/bingo.js"></script>
+
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
-
     <title>Bingo</title>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class='col-sm-10 main'>
-                <div class='row'>
-                    <div class='col-sm-4'>{사용자이름}</div>
-                    <div class='col-sm-4'>빙고수 : <span id='bingo_num'>2</span></div>
-                    <div class='col-sm-4'>현재 차례 : {사용자이름}</div>
-                </div>    
-                <table class="table table-bordered">
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                        <td>5</td>
-                    </tr>
-                </table>
-            </div>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 main">
+                    <div class='row'>
+                        <div class="info_header col-md-12 ">
+                            <div class='col-md-4'>
+                                <span>유저 이름 : </span>
+                                <span>{사용자이름}</span>
+                            </div>
+                            <div class='col-md-4'>
+                                <span>빙고 : </span>
+                                <span id="bingoCount">0</span>
+                            </div>
+                            <div class='col-md-4'>
+                                <span>현재 차례 : </span>
+                                <span>{사용자이름}</span>
+                            </div>
+                        </div>
+                    </div>
 
+                    <div class='row'>
+                        <div class='col-md-12'>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <td id="1" class="num" onclick="Bingo(this)"></td>
+                                    <td id="2" class="num" onclick="Bingo(this)"></td>
+                                    <td id="3" class="num" onclick="Bingo(this)"></td>
+                                    <td id="4" class="num" onclick="Bingo(this)"></td>
+                                    <td id="5" class="num" onclick="Bingo(this)"></td>
+                                </tr>
+                                <tr id="row_2">
+                                    <td id="6" class="num" onclick="Bingo(this)"></td>
+                                    <td id="7" class="num" onclick="Bingo(this)"></td>
+                                    <td id="8" class="num" onclick="Bingo(this)"></td>
+                                    <td id="9" class="num" onclick="Bingo(this)"></td>
+                                    <td id="10" class="num" onclick="Bingo(this)"></td>
+                                </tr>
+                                <tr id="row_3">
+                                    <td id="11" class="num" onclick="Bingo(this)"></td>
+                                    <td id="12" class="num" onclick="Bingo(this)"></td>
+                                    <td id="13" class="num" onclick="Bingo(this)"></td>
+                                    <td id="14" class="num" onclick="Bingo(this)"></td>
+                                    <td id="15" class="num" onclick="Bingo(this)"></td>
+                                </tr>
+                                <tr id="row_4">
+                                    <td id="16" class="num" onclick="Bingo(this)"></td>
+                                    <td id="17" class="num" onclick="Bingo(this)"></td>
+                                    <td id="18" class="num" onclick="Bingo(this)"></td>
+                                    <td id="19" class="num" onclick="Bingo(this)"></td>
+                                    <td id="20" class="num" onclick="Bingo(this)"></td>
+                                </tr>
+                                <tr id="row_5">
+                                    <td id="21" class="num" onclick="Bingo(this)"></td>
+                                    <td id="22" class="num" onclick="Bingo(this)"></td>
+                                    <td id="23" class="num" onclick="Bingo(this)"></td>
+                                    <td id="24" class="num" onclick="Bingo(this)"></td>
+                                    <td id="25" class="num" onclick="Bingo(this)"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
 
-            <div class='col-sm-2 chat'>
-                채팅영역
-                <div class='row'>
-                    <!-- <div class='col-sm-12'> -->
-                        <ul class='list-group'>
-                            <li class='list-group-item list-group-item-success'><span>나 : </span>asdasdas</li>
-                            <li class='list-group-item list-group-item-success' ><span>사용자누구 : </span>asdasdas</li>
-                            <li class='list-group-item list-group-item-success' ><span>나 : </span>asdasdas</li>
-                            <li class='list-group-item list-group-item-success' ><span>나 : </span>asdasdas</li>
-                            <li class='list-group-item list-group-item-success' ><span>나 : </span>asdasdas</li>
-                        </ul>
-                    <!-- </div> -->
+                    <div class="row">
+                        <div class="col-md-4">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#result_modal">
+                                게임끝내기
+                            </button>
+                            <button class="btn btn-danger">나가기 예약</button>
+                        </div>
+                        <!-- Modal -->
+                        <!-- Modal -->
+                        <div class="modal fade" id="result_modal" role="dialog">
+                            <div class="modal-dialog">
+                        
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">{ result(WIN! || LOSE!) }</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p id="winner">(winner){사용자 이름}</p>
+                                        <p>{사용자 이름}</p>
+                                        <p>{사용자 이름}</p>
+                                        <p>{사용자 이름}</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-primary" >다시하기({x}/4)</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">나가기</button>
+                                    </div>
+                                </div>
+                        
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class='row'>
-                    <!-- <input class='col-sm-8 class="form-control' /> <button class='col-sm-4 btn btn-danger 'type="button">전송</button> -->
-                    <div class="input-group">
-                        <input type="text" class="form-control " placeholder="Recipient's username" aria-describedby="basic-addon2">
-                        <span class="input-group-addon" id="basic-addon2">전송</span>
+
+                <div class='col-md-2 chat'>
+                    <div class='row'>
+                        <ul class='list-group'>
+                            <li class='list-group-item list-group-item-success me'><span>나 : </span>asdasdas</li>
+                            <li class='list-group-item list-group-item-success ' ><span>사용자누구 : </span>asdasdas</li>
+                            <li class='list-group-item list-group-item-success me' ><span>나 : </span>asdasdas</li>
+                            <li class='list-group-item list-group-item-success me' ><span>나 : </span>asdasdas</li>
+                            <li class='list-group-item list-group-item-success me' ><span>나 : </span>asdasdas</li>
+                        </ul>
+                    </div>
+                    <div class='row'>
+                        <div class="input-group">
+                            <div class="publisher bt-1 border-light"> 
+                                <input class="publisher-input col-md-12" type="text" placeholder="Write something">
+                                <a class="publisher-btn text-info" href="#" data-abc="true">
+                                    <i class="fa fa-paper-plane"></i>
+                                </a> 
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
