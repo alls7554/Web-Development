@@ -5,6 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 
@@ -14,8 +16,12 @@
     <!-- Latest compiled and minified JavaScript -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
 
+    <script src="../js/cookie.js"></script>
+
+
     <link rel="stylesheet" href="../css/default.css">
-    <link rel="stylesheet" href="../css/content.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/game.css">
 
     <title>Bingo</title>
 </head>
@@ -24,14 +30,17 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-md-offset-4 title"><h1>B I N G O !</h1></div>
-                
             </div>
             <div class="row">
-                <div class="col-md-4 col-md-offset-4 col-sm-12 nickname"><input type="test" class="form-control" placeholder="Nickname"></div>
+                <div class="col-md-4 col-md-offset-4 col-sm-12 nickname">
+                    <div class="publisher bt-1 border-light"> 
+                        <input type="test" class="publisher-input" placeholder="Nickname" id="user_name">
+                    </div>
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-4 col-md-offset-4 submit">
-                    <button class="btn btn-primary btn-success">시작</button>
+                    <button class="btn btn-success" onclick="setCookie(true, 1)">시작</button>
                 </div>
             </div>
             <div class="row rule">
@@ -48,4 +57,11 @@
         </div>
     </div>
 </body>
+<script>
+// window.onload = function(){
+
+//     var user_name = $("#user_name").innerHTML;
+// }
+</script>
+
 </html>

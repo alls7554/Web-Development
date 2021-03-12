@@ -23,34 +23,22 @@ window.onload = function() {
 
     var output = "";
 
-    for (let i = 0; i < arr.length; i++) {
+    for (var i = 0; i < arr.length; i++) {
 
         output = "";
 
         output += arr[i];
 
-        document.getElementById(i + 1).innerHTML = output;
+        document.getElementById(i).innerHTML = output;
     }
 }
 
 function Bingo(obj) {
 
-    console.log("클릭한 번호"+obj.innerHTML);
-
     var number = document.getElementById(obj.id);
 
-    //temp code
-    console.log(parseInt(obj.id/5)+", "+(parseInt(obj.id%6)-1));
-    
-    arr2[parseInt(obj.id / 5)][(parseInt(obj.id % 6)-1)] = 0;
+    arr2[parseInt(obj.id / 5)][obj.id % 5] = 0;
     number.style.backgroundColor = "Gray";
-
-    // temp code
-    // for (let i = 0; i < arr2.length; i++) {
-    //     for (let j = 0; j < arr2[i].length; j++) {
-    //         console.log(arr2[i][j]);
-    //     }
-    // }
 
     BlackBingo();
 }
@@ -71,9 +59,7 @@ function BlackBingo() {
                 break;
             }
         }
-        // console.log("row_check"+i+" : " + check);
         if (check) row++;    //빙고 카운트
-        // console.log("row:"+row);
     }
 
     // 세로 빙고 검사
@@ -87,27 +73,25 @@ function BlackBingo() {
                 break;
             }
         }
-        // console.log("col_check : " + check);
         if (check) col++;  //빙고 카운트 
     }
 
+    // 대각선 빙고 검사
     var right = 0;
     var left = 0;
 
-    for (let i = 0; i < arr[0].length; i++) {
-        if (arr2[i][i] == 0){
-            console.log("arr2["+i+"]["+i+"]"+arr2[i][i])
-            right++;
-        }
-        if (arr2[arr2.length - i - 1][i] == 0){
-            console.log("arr2["+(arr2.length-i+1)+"]["+i+"]"+arr2[i][i])
-            left++;  
-        } 
+    for (i = 0; i < arr2[0].length; i++) {
+        if (arr2[i][i] == 0) right++; // 오른대각
+        if (arr2[arr2.length - i - 1][i] == 0) left++;  // 왼대각
         if (right == 5 || left == 5) cross++;
     }
-    if (right == 5 && left == 5) corss++;
-    console.log("right" + right);
-    console.log("left" + left);
+    if (right == 5 && left == 5) cross++;
 
     document.getElementById('bingoCount').innerHTML = (cross + row + col);
+
+    if((cross + row + col) == 1) gameOver();
+}
+
+function gameOver() {
+    $("#result_modal").modal();
 }
