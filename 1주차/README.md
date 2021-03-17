@@ -1,7 +1,44 @@
 # html, css, javascript를 통해 WEB BINGO GAME 제작  
-1주차에는 html(BootStrap V3.4.1), css, javascript를 이용해 빙고 게임의 기본 틀 제작
+1주차에는 html(BootStrap V3.4.1), css, javascript를 이용해 빙고 게임의 기본 틀 제작  
 
-## 디렉토리 구조
+<br>
+
+## Install WSL2(Windows Subsystem for Linux2)
+1. Install Windows Terminal at Microsoft Store
+2. Run Windows Terminal on administrator privileges
+3. Run this command sequentially
+``` bash
+> dism.exe /online /enable-feature /featurename:Microsoft-Windows-Subsystem-Linux /all /norestart
+> dism.exe /online /enable-feature /featurename:VirtualMachinePlatform /all /norestart
+```
+4. Restart
+5. Install Ubuntu at Microsoft Store
+6. Register username and password of UNIX
+7. Check applied current Linux version
+``` bash
+> wsl -l -v
+    Name        State       Version
+ *  Ubuntu      Running     1    
+```
+8. Run this command
+``` bash
+> wsl --set-version Ubuntu 2
+```
+9. Change the default so that WSL2 is applied to all newly installed distributions.
+``` bash
+> wsl --set-default-version 2
+```
+10. Check Linux version after force restart
+``` bash
+> wsl -t Ubuntu
+
+> wsl -l -v
+    Name        State       Version
+ *  Ubuntu      Running     2
+```
+11. Finally run Ubuntu at Windows Terminal
+
+## Structure of Directory
 ``` bash    
 ├─ 장기현장실습  
 │     │
