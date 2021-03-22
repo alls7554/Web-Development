@@ -1,6 +1,9 @@
 # Structure Web Server using Node.js
 
-npm install essential  after clone
+Essential after clone
+```
+npm install
+```
 
 ## Structure of directory
 ``` bash    
@@ -71,6 +74,6 @@ npm install ejs
 ```
 
 ## Execute
-```
-
+```bash
+{installed path} $ npm start
 ```
