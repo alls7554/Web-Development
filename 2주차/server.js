@@ -3,8 +3,7 @@ var fs = require('fs');
 var path = require('path');
 
 var myPath = path.dirname(__filename);
-var rootPath = path.normalize(myPath + "/..")
-var _url = path.normalize(rootPath + "/pages/index.html")
+var _url = path.normalize(myPath + "/views/index.html")
 
 var app = http.createServer(function (request, response) {
 
@@ -23,11 +22,11 @@ var app = http.createServer(function (request, response) {
         
         // 확장자명이 html인 경우
         if (htmlEx.test(split_url[1])) {
-            url = rootPath + "/pages/" + url;
-        } else if(excep_Re.test(split_url[1])){
-            url = rootPath + url;
+            url = myPath + "/views" + url;
+        } else if(excep_Re.test( split_url[2])){
+            url = myPath + url;
         } else {
-          url = rootPath+'/pages/404.html';
+          url = myPath+'/views/404.html';
           console.log(url)
         }
     } else {

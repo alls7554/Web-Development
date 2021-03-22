@@ -18,23 +18,17 @@
     
     <script src="https://kit.fontawesome.com/94f5e1f0d5.js" crossorigin="anonymous"></script>
     
-    <script src="../js/bingo.js"></script>
-    <script src="../js/cookie.js"></script>
-    <script src="../js/chat.js"></script>
+    <script src="js/bingo.js"></script>
+    <script src="js/cookie.js"></script>
+    <script src="js/chat.js"></script>
 
-    <link rel="stylesheet" href="../css/default.css">
-    <link rel="stylesheet" href="../css/game.css">
-    <link rel="stylesheet" href="../css/chat.css">
+    <link rel="stylesheet" href="css/default.css">
+    <link rel="stylesheet" href="css/chat.css">
+    <link rel="stylesheet" href="css/game.css">
 
     <title>Bingo</title>
 </head>
 <body>
-    <script>
-        if(getCookie() == ""){
-            alert("")
-            location.href = './';
-        }   
-    </script>
     <div class="jumbotron">
         <div class="container">
             <div class="row">
@@ -152,8 +146,15 @@
     </div>
 </body>
 <script> 
-    $(function(){
-        getCookie();
-    })
+    window.onload(function(){
+        var nickname = getCookie();
+        if(nickname == ""){
+            alert("Nickname이 없으므로 초기화면으로 돌아갑니다.")
+            location.href = './';
+        } 
+    
+        $('#my_name').innerHTML = nickname;
+    });
+
 </script>
 </html>
