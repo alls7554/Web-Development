@@ -44,7 +44,7 @@ textarea {
 @media(min-width:768px){
     .chat_log {
         /* height: 387px !important; */
-        height: 42vh !important;
+        height: 43vh !important;
         background-color: white;
         overflow-y: auto;
     }

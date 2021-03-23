@@ -1,8 +1,13 @@
-# Structure Web Server using Node.js(Express)
+# Make Web Server using Node.js(Express)
 
 Essential after clone
 ```
 npm install
+```
+
+## Install socket.io
+```
+sudo npm install -g socket.io
 ```
 
 ## Structure of directory
@@ -35,7 +40,7 @@ npm install
 │           │    └── js/                 - js 폴더
 │           │         ├── cookie.js      - 쿠키 CRD 기능 js
 │           │         ├── bingo.js       - 빙고게임 관련 기능 js
-│           │         └── chat.js        - 채팅 관련 기능 js
+│           │         └── chat.js        - 채팅 관련 기능 js --> socket.io()로 bingo.js에 결합 중 (21.03.23) 
 │           │
 │           └── router/
 │                └── main.js      - index와 game 라우팅하는 js
