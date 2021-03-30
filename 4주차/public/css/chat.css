@@ -1,0 +1,56 @@
+button,
+input,
+optgroup,
+select,
+textarea {
+    font-family: Roboto, sans-serif;
+    font-weight: 300
+}
+
+.publisher-btn {
+    background-color: transparent;
+    border: none;
+    color: #8b95a5;
+    font-size: 16px;
+    cursor: pointer;
+    overflow: -moz-hidden-unscrollable;
+    -webkit-transition: .2s linear;
+    transition: .2s linear
+}
+
+.publisher-btn {
+    background-color: transparent;
+    border: none;
+    color: #cac7c7;
+    font-size: 16px;
+    cursor: pointer;
+    overflow: -moz-hidden-unscrollable;
+    -webkit-transition: .2s linear;
+    transition: .2s linear
+}
+
+.text-info {
+    color: #48b0f7 !important
+}
+
+@media(max-width:768px){
+    .chat_log {
+        height: 103px !important;
+        background-color: white;
+        overflow-y: auto;
+    }
+}
+
+@media(min-width:768px){
+    .chat_log {
+        /* height: 387px !important; */
+        height: 43vh !important;
+        background-color: white;
+        overflow-y: auto;
+    }
+}
+
+
+.input_chat{
+    display: inline !important;
+}

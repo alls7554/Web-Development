@@ -1,0 +1,51 @@
+/* http://meyerweb.com/eric/tools/css/reset/ v2.0 | 20110126 License: none (public domain) */ 
+
+/* HTML5 display-role reset for older browsers */ 
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section { 
+    display: block; 
+} 
+
+html, body { height: 100%; }
+ol, ul { list-style: none; }
+blockquote, q { quotes: none; } 
+blockquote:before, blockquote:after, q:before, q:after { content: ''; content: none; } 
+table { border-collapse: collapse; border-spacing: 0; }
+tr { height: 50px; }
+
+.jumbotron{
+    height: 100%;
+}
+
+.publisher-input {
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    border: none;
+    outline: none !important;
+    background-color: transparent;
+    margin: 0px;
+    padding: 0px !important;
+}
+
+.publisher {
+    position: relative;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 12px 0px 12px 20px;
+    background-color: #f9fafb
+}
+
+.publisher>*:first-child {
+    margin-left: 0
+}
+
+.publisher>* {
+    margin: 0 8px
+}
+
+.title {
+    text-align: center;
+    z-index: 1;
+    margin-top: 0px !important;
+    margin-bottom: 20px !important;
+}
