@@ -24,8 +24,6 @@ function check_num(user_name, obj){
     
     $("#chat_list").append("<li class='list-group-item list-group-item-warning'><span>System : "+ user_name + "님이 " + obj.innerText +"을(를) 선택하셨습니다.</span></li>");
     
-    bingoRoom.emit('CLICK', user_name, obj.innerText);
-    
     arr2[parseInt(obj.id / 5)][obj.id % 5] = 0;
 
     obj.className += ' clicked_num';

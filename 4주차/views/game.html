@@ -164,18 +164,14 @@
     const bingoRoom = io('/bingo');
 
     let roomIdx;
-    
-    sendMsg = doc.getElementById('send_btn');
-    sendMsg.addEventListener('click', function(){
-        sendMessage(user_name);
-    });
-     
+         
     let nums = doc.getElementsByClassName('num');
     
     for (let i = 0; i < nums.length; i++) {
         nums[i].addEventListener('click', function(){
-            var user_name = doc.getElementById('my_name').innerText;
             check_num(user_name, this);
+            let num = this.innerHTML
+            bingoRoom.emit('CLICK', { roomIdx, user_name, num} );
         });
     }
 
@@ -185,7 +181,7 @@
     });
 
     bingoRoom.on('whosEnter', function(name, idx){
-        $('#chat_list').append("<li class='list-group-item list-group-item-warning'><span>System : "+ name + "님이 입장하셨습니다.</span></li>");
+        $('#chat_list').append("<li class='list-group-item list-group-item-warning'><span>System : "+ name + "님이" + idx + "에 입장하셨습니다.</span></li>");
         $('#msg').focus();
         roomIdx = idx;
     });
@@ -242,27 +238,34 @@
             e.preventDefault();
                         
             // 메시지 전송
-            sendMessage(user_name);
+            sendMessage();
             // 입력창 clear
             clearMsg();
             
         }
     });
     // 다른 사람이 메시지 전송시 받기
-    bingoRoom.on('SEND', function(user_name, msg){
+    bingoRoom.on('received', function(user_name, msg){
         $("#chat_list").append("<li class='list-group-item list-group-item-success'><span>"+ user_name + " : " + msg +"</span></li>");
         // 스크롤바 아래 고정
         $('div.chat_log').scrollTop($('div.chat_log').prop('scrollHeight'));
     });
 
+    $('#send').click(function(e) {
+        e.preventDefault();
+
+        sendMessage();
+    });
+
     // 메시지 전송
     function sendMessage() {
-        var msg = $("#msg").val();
+        var msg = $('#msg').val();
         
         if(msg == "") return;
+
         console.log(user_name, msg, roomIdx)
         
-        bingoRoom.emit('SEND', { user_name, msg, roomIdx });
+        bingoRoom.emit('send', { user_name, msg, roomIdx });
 
         $("#chat_list").append("<li class='list-group-item list-group-item-success me'><span>" + user_name + "(나) : " + msg +"</span></li>");
         
