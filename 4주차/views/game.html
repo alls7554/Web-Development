@@ -22,6 +22,7 @@
 
     <script src="js/game.js"></script>
     <script src="js/cookie.js"></script>
+    <script src="js/chat.js"></script>
        
     <link rel="stylesheet" href="css/default.css">
     <link rel="stylesheet" href="css/chat.css">
@@ -30,6 +31,23 @@
     <title>Bingo</title>
 </head>
 <body>
+    <!-- Modal -->
+    <div class="modal fade" id="result_modal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="result" class="modal-title"></h4>
+                </div>
+                
+                <div class="modal-footer">
+                    <a href="/">
+                        <button type="button" id="exit_btn" class="btn btn-danger">나가기</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> <!-- Model End-->
     <div class="jumbotron">
         <div class="container">
             <div class="row">
@@ -39,8 +57,11 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="loader"></div>
-                    <div class="col-md-9 main">
+                    <div class="col-md-9" id="main">
+                        <div id="loader" class="loading-container">
+                            <div class="loading"></div>
+                            <div id="loading-text">Matching<br></div>
+                        </div>
                         <div class='row'>
                             <div class="info_header col-md-12 ">
                                 <div class='col-md-4'>
@@ -100,33 +121,8 @@
                             </div>
                         </div>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="result_modal" role="dialog">
-                            <div class="modal-dialog">
-                                <!-- Modal content-->
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h4 id="result" class="modal-title"></h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <span id="winner"></span>
-                                        <p>{사용자 이름}</p>
-                                        <p>{사용자 이름}</p>
-                                        <p>{사용자 이름}</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a href="/game.html">
-                                            <button type="button" class="btn btn-primary">다시하기</button>
-                                        </a>
-                                        <a href="/">
-                                            <button type="button" id="exit_btn" class="btn btn-danger">나가기</button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> <!-- Model End-->
                     </div> 
-                    <div class='col-md-3 chat'>
+                    <div class='col-md-3' id="chat">
                         <div class='row chat_log'>
                             <ul id="chat_list" class='list-group'>
                                 <!-- chat log -->
@@ -149,101 +145,89 @@
     </div>
 </body>
 <script> 
-    
-    window.addEventListener('DOMContentLoaded', function(){
-        const nickname = getCookie();
-        
-        if(nickname == ""){
-            alert("Nickname이 없으므로 초기화면으로 돌아갑니다.")
-            location.href = './';
-        } 
-        doc.getElementById('my_name').innerHTML = nickname;
+    // 새로고침 방지(f5, ctrl+f5, ctrl+r)
+    $(document).keydown(function (e) {
+        if (e.which === 116) {
+            if (typeof e == "object") {
+                e.keyCode = 0;
+            }
+            return false;
+        } else if (e.which === 82 && e.ctrlKey) {
+            return false;
+        }
     });
-
+    
     const user_name = getCookie();
     const bingoRoom = io('/bingo');
-
+    
     let roomIdx;
-         
+    
     let nums = doc.getElementsByClassName('num');
     
+    bingoRoom.on('whosEnter', function(name, idx, num){
+        $('#chat_list').append("<li class='list-group-item list-group-item-warning'><span>System : "+ name + "님이 "+idx+"에 입장하셨습니다.</span></li>");
+        $('#msg').focus();
+        doc.getElementById('loading-text').innerHTML = 'Matching<br>' + num +'/4';
+        $('#main').addClass('matching_main');
+        $('#chat').addClass('matching_chat');
+        roomIdx = idx;
+        
+        // 채팅방 스크롤 밑단 고정
+        $('div.chat_log').scrollTop($('div.chat_log').prop('scrollHeight'));
+    });
+
+    bingoRoom.on('whosLeave', function(user_name, idx, num){
+        $('#chat_list').append("<li class='list-group-item list-group-item-warning'><span>System : "+ user_name + "님이 "+idx+"에서 퇴장하셨습니다.</span></li>");
+        // 스크롤바 아래 고정
+        $('div.chat_log').scrollTop($('div.chat_log').prop('scrollHeight'));
+
+        doc.getElementById('loading-text').innerHTML = 'Matching<br>' + num +'/4';
+    });
+
+    bingoRoom.on('GameStart', function(firstPlayer) {
+        makeBingo();
+        doc.getElementById('user_turn').innerHTML = firstPlayer;
+        $('#chat').removeClass('matching_chat');
+        $('#loader').fadeOut(800);
+    });
+    
+    bingoRoom.on('UrTurn', function() {
+        $('#main').removeClass('matching_main');
+    });
+
     for (let i = 0; i < nums.length; i++) {
         nums[i].addEventListener('click', function(){
-            check_num(user_name, this);
-            let num = this.innerHTML
+            let num = this.innerText;
+            let objId = this.id;
+
             bingoRoom.emit('CLICK', { roomIdx, user_name, num} );
+            
+            check_num(user_name, objId, num, roomIdx);
+
+            $('#main').addClass('matching_main');
         });
     }
 
-    let exit = doc.getElementById("exit_btn");
-    exit.addEventListener('click', function(){
-        deleteCookie();
-    });
-
-    bingoRoom.on('whosEnter', function(name, idx){
-        $('#chat_list').append("<li class='list-group-item list-group-item-warning'><span>System : "+ name + "님이" + idx + "에 입장하셨습니다.</span></li>");
-        $('#msg').focus();
-        roomIdx = idx;
-    });
-
-    bingoRoom.on('GameStart',function() {
-        for (let i = 0; i < arr.length; i++) {
-            arr[i] = i + 1;
-        }
-
-        arr.sort(function () { return 0.5 - Math.random() });
-
-        for (let i = 0; i < arr.length; i++) {
-            bingo[i % 5] = arr[i];    //01234/01234/01234/01234/01234
-            if ((i + 1) % 5 == 0) {
-                arr2[tmp] = bingo;
-                tmp++;
-                bingo = [];
-            }
-        }
-
-        let output = "";
-
-        for (var i = 0; i < arr.length; i++) {
-
-            output = "";
-            output += arr[i];
-            doc.getElementById(i).innerHTML += output;
-        }
-    });
-
-    bingoRoom.on('CLICK', function(user_name, number) {
+    bingoRoom.on('CLICK', function(user_name, number, nowTurnPlayer) {
         for(let i=0; i<arr.length; i++){
             if(number == arr[i]) {
-                            
-                $("#chat_list").append("<li class='list-group-item list-group-item-warning'><span>System : "+ user_name + "님이 " + number +"을(를) 선택하셨습니다.</span></li>");
-                console.log(arr2[parseInt(i / 5)][i % 5]);
-                arr2[parseInt(i / 5)][i % 5] = 0;
-                let clickedNum = document.getElementById(i)
-                clickedNum.className += ' clicked_num';
-            
-                BlackBingo();
-                return;
+                check_num(user_name, i, number, roomIdx);
+                break;
             }
         }
+        doc.getElementById('user_turn').innerHTML = nowTurnPlayer;
     });
 
     bingoRoom.on('GAMEOVER', function(){
         gameOver();
     });
 
-    // Chatting 영역 시작
-    $(document).on('keydown', 'div.publisher input', function(e){
-        if(e.keyCode == 13 && !e.shiftKey) {
-            e.preventDefault();
-                        
-            // 메시지 전송
-            sendMessage();
-            // 입력창 clear
-            clearMsg();
-            
-        }
+    // modal 영역
+    $('#eit_btn').click(function(){
+        deleteCookie();
+        location.href = '/';
     });
+ 
     // 다른 사람이 메시지 전송시 받기
     bingoRoom.on('received', function(user_name, msg){
         $("#chat_list").append("<li class='list-group-item list-group-item-success'><span>"+ user_name + " : " + msg +"</span></li>");
@@ -251,33 +235,20 @@
         $('div.chat_log').scrollTop($('div.chat_log').prop('scrollHeight'));
     });
 
-    $('#send').click(function(e) {
-        e.preventDefault();
-
-        sendMessage();
-    });
 
     // 메시지 전송
-    function sendMessage() {
-        var msg = $('#msg').val();
-        
+    function sendMessage(user_name) {
+        var msg = $("#msg").val();
+    
         if(msg == "") return;
 
-        console.log(user_name, msg, roomIdx)
-        
-        bingoRoom.emit('send', { user_name, msg, roomIdx });
+        bingoRoom.emit('send', {user_name, msg, roomIdx});
 
-        $("#chat_list").append("<li class='list-group-item list-group-item-success me'><span>" + user_name + "(나) : " + msg +"</span></li>");
-        
+        $("#chat_list").append("<li class='list-group-item list-group-item-success me'><span>" + user_name + "(나):" + msg +"</span></li>");
+    
         // 스크롤바 아래 고정
         $('div.chat_log').scrollTop($('div.chat_log').prop('scrollHeight'));
         clearMsg();
-    };
-
-    // 메시지 입력창 초기화
-    function clearMsg(){
-        $("#msg").val("");
-    };
-
+    }
 </script>
 </html>
