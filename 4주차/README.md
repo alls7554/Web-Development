@@ -20,8 +20,10 @@ sudo npm install -g socket.io
 │     ├── 2주차/
 │     │     └── ...                      - 2주차 README 파일 참조
 │     │   
-│     └── 3주차/
-│           ├── README.md                - 3주차 리드미 파일
+│     ├── 2주차/
+│     │     └── ...                      - 3주차 README 파일 참조   
+│     └── 4주차/
+│           ├── README.md                - 4주차 리드미 파일
 │           ├── server.js                - 서버 js
 │           ├── package.json             - init 파일
 │           │
@@ -40,7 +42,7 @@ sudo npm install -g socket.io
 │           │    └── js/                 - js 폴더
 │           │         ├── cookie.js      - 쿠키 CRD 기능 js
 │           │         ├── bingo.js       - 빙고게임 관련 기능 js
-│           │         └── chat.js        - 채팅 관련 기능 js --> socket.io()로 bingo.js에 결합 중 (21.03.23) 
+│           │         └── chat.js        - 채팅 관련 기능 js
 │           │
 │           └── router/
 │                └── main.js      - index와 game 라우팅하는 js
