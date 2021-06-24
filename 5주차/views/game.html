@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css" integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+
+  <script src="https://kit.fontawesome.com/94f5e1f0d5.js" crossorigin="anonymous"></script>
+
+  <script src="/socket.io/socket.io.js"></script>
+
+  <script src="js/game.js"></script>
+  <script src="js/cookie.js"></script>
+  <script src="js/chat.js"></script>
+
+  <link rel="stylesheet" href="css/default.css">
+  <link rel="stylesheet" href="css/chat.css">
+  <link rel="stylesheet" href="css/game.css">
+
+  <title>Bingo</title>
+</head>
+<body>
+    <!-- Modal -->
+    <div class="modal fade" id="result_modal" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 id="result" class="modal-title"></h4>
+                </div>
+                
+                <div class="modal-footer">
+                    <a href="/">
+                        <button type="button" id="exit_btn" class="btn btn-danger">나가기</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div> <!-- Model End-->
+    <div class="jumbotron">
+        <div class="container">
+            <div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 title">
+                        <h1>B I N G O !</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9" id="main">
+                        <div id="loader" class="loading-container">
+                            <div class="loading"></div>
+                            <div id="loading-text">Matching<br></div>
+                        </div>
+                        <div class='row'>
+                            <div class="info_header col-md-12 ">
+                                <div class='col-md-4'>
+                                    <span>유저 이름 : </span>
+                                    <span id="my_name"></span>
+                                </div>
+                                <div class='col-md-4'>
+                                    <span>빙고 : </span>
+                                    <span id="bingoCount">0</span>
+                                </div>
+                                <div class='col-md-4'>
+                                    <span>현재 차례 : </span>
+                                    <span id="user_turn"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class='row'>
+                            <div class='col-md-12'>
+                                <table class="table table-bordered">
+                                    <tr id="row_1">
+                                        <td id="0" class="num"></td>
+                                        <td id="1" class="num"></td>
+                                        <td id="2" class="num"></td>
+                                        <td id="3" class="num"></td>
+                                        <td id="4" class="num"></td>
+                                    </tr>
+                                    <tr id="row_2">
+                                        <td id="5" class="num"></td>
+                                        <td id="6" class="num"></td>
+                                        <td id="7" class="num"></td>
+                                        <td id="8" class="num"></td>
+                                        <td id="9" class="num"></td>
+                                    </tr>
+                                    <tr id="row_3">
+                                        <td id="10" class="num"></td>
+                                        <td id="11" class="num"></td>
+                                        <td id="12" class="num"></td>
+                                        <td id="13" class="num"></td>
+                                        <td id="14" class="num"></td>
+                                    </tr>
+                                    <tr id="row_4">
+                                        <td id="15" class="num"></td>
+                                        <td id="16" class="num"></td>
+                                        <td id="17" class="num"></td>
+                                        <td id="18" class="num"></td>
+                                        <td id="19" class="num"></td>
+                                    </tr>
+                                    <tr id="row_5">
+                                        <td id="20" class="num"></td>
+                                        <td id="21" class="num"></td>
+                                        <td id="22" class="num"></td>
+                                        <td id="23" class="num"></td>
+                                        <td id="24" class="num"></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div> 
+                    <div class='col-md-3' id="chat">
+                        <div class='row chat_log'>
+                            <ul id="chat_list" class='list-group'>
+                                <!-- chat log -->
+                            </ul>
+                        </div>
+                        <div class='row'>
+                            <div class="col-md-12 input-group input_chat">
+                                <div class="col-md-12 publisher bt-1 border-light"> 
+                                    <input class="publisher-input" id="msg" type="text" placeholder="Write something">
+                                    <button id="send_btn" class="publisher-btn text-info" href="#" data-abc="true">
+                                        <i class="fa fa-paper-plane"></i>
+                                    </button> 
+                                </div>
+                            </div>
+                        </div>
+                    </div>              
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script> 
+
+  let user_name;
+  const bingoRoom = io('/bingo');
+  
+  let roomIdx;
+
+  bingoRoom.on('IMENTER', function(name) {
+      user_name = name;
+      if(user_name == ""){
+          alert("Nickname이 없으므로 초기화면으로 돌아갑니다.")
+          location.href = './';
+      } 
+      document.getElementById('my_name').innerHTML = user_name;
+      $('#main').addClass('matching_main');
+      $('#chat').addClass('matching_chat');
+  });
+  
+  bingoRoom.on('WHOSENTER', function(name, idx, num){
+      $('#chat_list').append("<li class='list-group-item list-group-item-warning'><span>System : "+ name + "님이 "+idx+"에 입장하셨습니다.</span></li>");
+      $('#msg').focus();
+      doc.getElementById('loading-text').innerHTML = 'Matching<br>' + num +'/2';
+      roomIdx = idx;
+      
+      // 채팅방 스크롤 밑단 고정
+      $('div.chat_log').scrollTop($('div.chat_log').prop('scrollHeight'));
+  });
+
+  bingoRoom.on('WHOSLEAVE', function(user_name, idx, num){
+      $('#chat_list').append("<li class='list-group-item list-group-item-warning'><span>System : "+ user_name + "님이 "+idx+"에서 퇴장하셨습니다.</span></li>");
+      // 스크롤바 아래 고정
+      $('div.chat_log').scrollTop($('div.chat_log').prop('scrollHeight'));
+
+      doc.getElementById('loading-text').innerHTML = 'Matching<br>' + num +'/2';
+  });
+
+  bingoRoom.on('REENTER', function (arr, arr2, idx){
+    $('#chat').removeClass('matching_chat');
+    $('#loader').fadeOut();
+
+    loadArray(arr, arr2);
+
+    roomIdx = idx;
+  });
+  
+  bingoRoom.on('GAMESTART', function(firstPlayer) {
+    let table = makeBingo();
+
+    doc.getElementById('user_turn').innerHTML = firstPlayer;
+    $('#chat').removeClass('matching_chat');
+    $('#loader').fadeOut(800);
+    bingoRoom.emit('GAMESTART', table.arr, table.arr2);
+  });
+  
+  bingoRoom.on('URTURN', function() {
+    $('#main').removeClass('matching_main');
+  });
+
+  let nums = doc.getElementsByClassName('num');
+
+  for (let i = 0; i < nums.length; i++) {
+    nums[i].addEventListener('click', function(){
+      let num = this.innerText,
+          objId = this.id;
+
+      check_num(user_name, objId, num, roomIdx);
+
+      if (!arr.length) {
+        alert('이미 선택된 번호입니다. (Please Click Others)')
+      } else {
+        bingoRoom.emit('CLICK', { roomIdx, user_name, num, objId} );
+        bingoRoom.emit('UPDATE', arr2);
+        $('#main').addClass('matching_main');
+      }
+
+    });
+  }
+  bingoRoom.on('CLICK', function(user_name, number) {
+    for(let i=0; i<arr.length; i++){
+      if(number == arr[i]) {
+        check_num(user_name, i, number, roomIdx);
+        bingoRoom.emit('UPDATE', arr2);
+        break;
+      }
+    }
+  });
+
+
+  bingoRoom.on('TURNCHANGE',  function(nowTurnPlayer){
+    doc.getElementById('user_turn').innerHTML = nowTurnPlayer;
+  });
+
+  bingoRoom.on('GAMEOVER', function(){
+    gameOver();
+  });
+
+  // modal 영역
+  $('#exit_btn').click(function(){
+    deleteCookie();
+    location.href = '/';
+  });
+
+  // 다른 사람이 메시지 전송시 받기
+  bingoRoom.on('received', function(user_name, msg){
+    $("#chat_list").append("<li class='list-group-item list-group-item-success'><span>"+ user_name + " : " + msg +"</span></li>");
+    // 스크롤바 아래 고정
+    $('div.chat_log').scrollTop($('div.chat_log').prop('scrollHeight'));
+  });
+
+
+  // 메시지 전송
+  function sendMessage(user_name) {
+    let msg = $("#msg").val();
+  
+    if(msg == "") return;
+
+    bingoRoom.emit('send', {user_name, msg, roomIdx});
+
+    $("#chat_list").append("<li class='list-group-item list-group-item-success me'><span>" + user_name + "(나):" + msg +"</span></li>");
+  
+    // 스크롤바 아래 고정
+    $('div.chat_log').scrollTop($('div.chat_log').prop('scrollHeight'));
+    clearMsg();
+  }
+</script>
+</html>
